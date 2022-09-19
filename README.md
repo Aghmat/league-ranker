@@ -23,7 +23,7 @@ Scala 2.13.8
 
 ### Supported file format
 
-Unsupported files will result in an exception being thrown. Files should be added to the resource folder.
+Unsupported files will result in an exception being thrown. Files should be added to the root folder.
 
 **Types**
 ```
