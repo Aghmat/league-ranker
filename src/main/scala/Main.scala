@@ -1,18 +1,20 @@
+import java.io.FileNotFoundException
 import scala.io.Source
-import scala.util.Using
+import scala.util.{Try, Using}
+import java.io.File
 
 object Main {
-  final val losePoints: Int = 0
-  final val drawPoints: Int = 1
-  final val winPoints: Int = 3
-
   def main(args: Array[String]): Unit = {
-    val fileName = args(0)
+    val fileName = Try(args(0)).getOrElse(throw new IllegalArgumentException("Please provide a valid file name"))
+
+    val fileExists = new File(fileName).exists()
+    lazy val currentDirectory = new java.io.File(".").getCanonicalPath
+    if (!fileExists) throw new FileNotFoundException(s"$fileName: not found in $currentDirectory")
 
     Using(Source.fromFile(fileName)) { source =>
       val games = source.getLines().map(new Game(_)).toSeq
       val table = Table(games)
-      print(table.toString())
+      println(table.toString())
     }
   }
 }
